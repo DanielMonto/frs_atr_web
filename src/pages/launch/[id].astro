@@ -1,0 +1,30 @@
+---
+import { getLaunchById,getLatestLaunchesIds } from "../../fetchs/spacex"
+import Layout from "../../layouts/Layout.astro"
+import CardLaunch from "../../components/CardLaunch.astro"
+
+const {id} = Astro.params
+let launch
+if(id){
+    launch=await getLaunchById(id)
+}
+export function getStaticPaths() {
+    return [
+        {params:{id:'5eb87cd9ffd86e000604b32a'}},
+        {params:{id:'5eb87cdaffd86e000604b32b'}},
+        {params:{id:'5eb87cdbffd86e000604b32c'}},
+        {params:{id:'5eb87cdbffd86e000604b32d'}},
+        {params:{id:'5eb87cdcffd86e000604b32e'}},
+        {params:{id:'5eb87cddffd86e000604b32f'}},
+        {params:{id:'5eb87cdeffd86e000604b330'}},
+        {params:{id:'5eb87cdfffd86e000604b331'}},
+        {params:{id:'5eb87cd0ffd86e000604b332'}},
+        {params:{id:'5eb87ce1ffd86e000604b333'}},
+        {params:{id:'5eb87ce1ffd86e000604b334'}},
+        {params:{id:'5eb87ce2ffd86e000604b335'}},
+    ];
+}
+---
+<Layout title={launch!=undefined?launch.name:`Launch ${id}`}>
+    {launch==undefined?<p>The launch was not found</p>:<CardLaunch obj={launch}/>}
+</Layout>

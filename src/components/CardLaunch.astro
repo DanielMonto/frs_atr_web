@@ -1,0 +1,32 @@
+---
+import type { Doc } from '../types/api'
+
+interface Props{
+    obj:Doc
+}
+
+const {success,flight_number,id,details}=Astro.props.obj
+const successText=success?"Successfull":"Failed"
+const img=Astro.props.obj.links.patch.small
+---
+<a href={`/launch/${id}`} class="mx-auto text-center w-full max-w-xl rounded-lg border shadow-md bg-gray-800 border-gray-700 hover:scale-105 hover:bg-gray-700 hover:border-gray-500 transition flex flex-col">
+    <picture class="flex justify-center p-4">
+        <img src={img} alt={`Patch for launch ${id}`} class="mb-5 rounded-lg">
+    </picture>
+    <header class="p-4 flex-grow">
+        <span class:list={[
+            "text-xs font-semibold mr-2 px-2.5 py-0.5 rounded",
+            {
+                "bg-green-200 text-green-900":success,"bg-red-200 text-red-90":!success
+            }
+        ]}>
+            {successText}
+        </span>
+        <h2 class="my-2 text-2xl font-bold tracking-tight text-white">
+            Flight #{flight_number}
+        </h2>
+        <p class="mb-4 font-light text-gray-400">
+            {details!=null && details?.length >180 ? details.slice(0,100) + '...' : details}
+        </p>
+    </header>
+</a>
